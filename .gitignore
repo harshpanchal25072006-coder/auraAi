@@ -1,0 +1,45 @@
+# ==============================
+# Secrets and API keys
+# ==============================
+.env
+.env.*
+!.env.example
+.streamlit/secrets.toml
+keys.txt
+keys.text.txt
+secrets.toml
+
+# ==============================
+# Python cache and virtual env
+# ==============================
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+env/
+
+# ==============================
+# IDE and operating system
+# ==============================
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# ==============================
+# Logs and temporary files
+# ==============================
+*.log
+*.tmp
+
+# ==============================
+# Local Streamlit configuration
+# ==============================
+.streamlit/config.toml
+
+# Personal data
+authorized_faces/
+
+# Local archives
+main.zip

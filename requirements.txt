@@ -1,0 +1,67 @@
+"""
+AURA - ek click setup.
+
+Ye file khud saare required modules install karti hai (alag se requirements.txt
+ki zarurat nahi, list niche hi likhi hai), phir chahe to app bhi chala deti hai.
+
+Chalane ka tarika (is file wale folder me terminal kholke):
+    Windows :  python install_requirements.py
+    Mac/Linux: python3 install_requirements.py
+"""
+import os
+import subprocess
+import sys
+
+REQUIREMENTS = [
+    "streamlit",
+    "pandas",
+    "numpy",
+    "matplotlib",
+    "scikit-learn",
+    "opencv-python<5",
+    "openai",
+]
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+
+def install():
+    print("=" * 50)
+    print(" AURA: modules install ho rahe hain (internet chalu rakho)")
+    print("=" * 50)
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "--upgrade", "pip"])
+    for pkg in REQUIREMENTS:
+        print(f"\n>>> Installing: {pkg}")
+        subprocess.check_call([sys.executable, "-m", "pip", "install", pkg])
+    print("\n✅ Saare modules install ho gaye!")
+
+
+def run_app():
+    key = input("\nOpenRouter API key paste karo (skip karne ke liye Enter): ").strip()
+    env = os.environ.copy()
+    if key:
+        env["OPENROUTER_API_KEY"] = key
+    app = os.path.join(BASE_DIR, "app.py")
+    if not os.path.exists(app):
+        print("app.py is folder me nahi mili. Is file ko project folder me rakho.")
+        return
+    print("\n🚀 App start ho raha hai... browser me http://localhost:8501 khulega")
+    subprocess.call([sys.executable, "-m", "streamlit", "run", app], env=env, cwd=BASE_DIR)
+
+
+if __name__ == "__main__":
+    try:
+        install()
+    except subprocess.CalledProcessError as e:
+        print(f"\n❌ Install me error aaya: {e}")
+        print("Internet check karo ya Python version 3.10+ rakho, phir dobara chalao.")
+        sys.exit(1)
+
+    if input("\nAb app chalana hai? (y/n): ").strip().lower() == "y":
+        run_app()
+    else:
+        print("\nBaad me chalane ke liye:  python -m streamlit run app.py")
+
+
+
+python -m streamlit run app.py
